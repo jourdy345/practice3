@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  header
+    nav
+      a.about(href="/about") About
+      a.work(href="/word") Work
+      a.life(href="/life") Life
+      a.contact(href="/contact") Contact
+  div.container
+    p.contactinfo.text-left.
+      Feel free to email me if you have any question.
+    form.form-horizontal(action='/contact' method='post')
+      .form-group
+        label.col-sm-2.control-label(for='inputEmail3') Email
+        .col-sm-10
+          input#inputEmail3.form-control(name='email', type='email', placeholder='your-email@address.com' value='jourdy345@me.com')
+      .form-group
+        label.col-sm-2.control-label(for='inputTitle') Title
+        .col-sm-10
+          input#inputTitle.form-control(name='title',type='text', placeholder='Title')
+      .form-group
+        label.col-sm-2.control-label(for='inputBody') Content
+        .col-sm-10
+          input#inputBody.form-control(name='content', type='text', placeholder='Your Email')
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          button.btn.btn-default(type='submit') Send
+
+
+block subcontent
+  h3 dfd

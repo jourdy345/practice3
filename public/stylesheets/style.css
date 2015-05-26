@@ -1,0 +1,65 @@
+body {
+  padding: 50px;
+  font: 14px, Helvetica, Arial, sans-serif;
+  background-color: #ececec !important;
+}
+
+header {
+  margin-top: 5%;
+  float: center;
+  text-align: center;
+}
+header img {
+  width: 200px;
+}
+
+span.icon-quote {
+  font-size: 100px;
+}
+
+nav {
+  float: center;
+  text-align: center;
+  padding: 5px;
+  font-family: "Dosis", sans-serif;
+}
+
+nav a {
+  display: inline-block;
+  padding: 30px;
+  font-size: 20px;
+}
+
+nav a:hover {
+  background-color: #f0f0f0;
+}
+
+div.body {
+  width: 850px;
+  text-align: center;
+  float: center;
+  padding: 5px;
+  /*clear: both;*/
+}
+
+div.body p {
+  font-size: 35px;
+  font-family: "Merriweather", serif;
+  line-height: 75px;
+}
+
+div p.intro {
+  font-family: "Merriweather", serif;
+  line-height: 40px;
+  text-align: justify;
+}
+
+.multiline {
+  white-space: pre; 
+  word-wrap: break-word;
+}
+
+p.contactinfo {
+  font-family: "Merriweather", serif;
+  margin-left: 70px;
+}
