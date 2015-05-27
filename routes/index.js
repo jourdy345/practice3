@@ -55,7 +55,7 @@ router.post('/contact', function(req, res) {
       console.log(error);
       return res.redirect('/contact/failed');
     }
-    console.log("Messeage sent: " + info.response);
+    console.log("Message sent: " + info.response);
     return res.redirect('/contact/done');
   });
 });

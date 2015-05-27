@@ -48,6 +48,10 @@ div.body p {
   line-height: 75px;
 }
 
+.login {
+  background-color: gray;
+}
+
 div p.intro {
   font-family: "Merriweather", serif;
   line-height: 40px;
