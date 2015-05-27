@@ -39,7 +39,7 @@ router.post '/contact', (req, res) ->
     if error
       console.log error
       return res.redirect '/contact/failed'
-    console.log "Messeage sent: #{info.response}"
+    console.log "Message sent: #{info.response}"
     res.redirect '/contact/done'
   # res.redirect '/contact/done'
 
