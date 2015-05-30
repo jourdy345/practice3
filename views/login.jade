@@ -1,24 +1,56 @@
 extends layout
 
 block content
-  html
+  header
+    a(href='/')
+      img.other(src="dist/img/gboy.jpg", class="img-circle")
   body
-    form
-      .form-group
-        label(for='exampleInputEmail1') Email address
-        input#exampleInputEmail1.form-control(type='email', placeholder='Enter email')
-      .form-group
-        label(for='exampleInputPassword1') Password
-        input#exampleInputPassword1.form-control(type='password', placeholder='Password')
-      .form-group
-        label(for='exampleInputFile') File input
-        input#exampleInputFile(type='file')
-        p.help-block Example block-level help text here.
-      .checkbox
-        label
-          input(type='checkbox')
-          |  Check me out
-      button.btn.btn-default(type='submit') Submit
-
+    //- Modal
+    .modal.fade#myModal(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          form.form-horizontal(action='/signup', method='post')
+            .modal-header
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') &times;
+              h4.modal-title(id='myModalLabel') Sign up
+            .modal-body
+              .form-group
+                label.col-sm-2.control-label(for='inputID') ID
+                .col-sm-10
+                  input#inputID.form-control(type='text', name='user_id' placeholder='Insert your ID')
+              .form-group
+                label.col-sm-2.control-label(for='inputPassword3') Password
+                .col-sm-10
+                  input#inputPassword3.form-control(type='password', name='user_password' placeholder='Insert your password')
+              .form-group
+                label.col-sm-2.control-label(for='PasswordReaffirm') PW Confirm
+                .col-sm-10
+                  input#PasswordReaffirm.form-control(type='password', name='user_pwreaffirm' placeholder='Reinsert your password')
+              .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Close
+                button.btn.btn-primary(type='submit') Sign up
+    
+    div.signin-box.center-block.animated.fadeInUp
+      div.signin-header
+        p Sign in
+      div.signin-body
+        form.form-horizontal
+          .form-group
+            label.col-sm-2.control-label(for='inputID') ID
+            .col-sm-10
+              input#inputID.form-control(type='text', placeholder='User ID')
+          .form-group
+            label.col-sm-2.control-label(for='inputPassword3') Password
+            .col-sm-10
+              input#inputPassword3.form-control(type='password', placeholder='Password')
+          .form-group
+            .col-sm-offset-2.col-sm-10
+              button.btn.btn-primary(type='submit') Sign in
+      div.signup-box.animated.fadeInUp
+        div.signup-para
+          p You haven't signed up yet?
+          //- Button trigger modal
+          button.btn.btn-success(type='button', data-toggle='modal', data-target="#myModal") Sign up
 block subcontent
   h3 dfd

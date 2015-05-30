@@ -48,9 +48,6 @@ div.body p {
   line-height: 75px;
 }
 
-.login {
-  background-color: gray;
-}
 
 div p.intro {
   font-family: "Merriweather", serif;
@@ -58,12 +55,19 @@ div p.intro {
   text-align: justify;
 }
 
-.multiline {
+/*.multiline {
   white-space: pre; 
   word-wrap: break-word;
-}
+}*/
 
 p.contactinfo {
   font-family: "Merriweather", serif;
   margin-left: 70px;
+}
+
+div.signin a {
+  clear: both;
+  float: center;
+  display: block;
+  margin: auto;
 }

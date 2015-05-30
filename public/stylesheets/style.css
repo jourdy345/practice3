@@ -4,7 +4,7 @@ body {
   background-color: #ececec !important;
 }
 
-header {
+header.index {
   margin-top: 5%;
   float: center;
   text-align: center;
@@ -13,6 +13,14 @@ header img {
   width: 200px;
 }
 
+header img.other {
+  margin-top: 50px;
+  margin-left: 50px;
+  width: 100px;
+}
+div.abouticon {
+  text-align: center;
+}
 span.icon-quote {
   font-size: 100px;
 }
@@ -62,4 +70,60 @@ div p.intro {
 p.contactinfo {
   font-family: "Merriweather", serif;
   margin-left: 70px;
+}
+
+.signin {
+  display: block;
+  text-align: center;
+}
+
+.signin-box {
+  margin-top: 100px;
+  width: 33%;
+}
+
+.signin-header {
+  margin-left: 95px;
+}
+
+.signin-body {
+  border-bottom: 1px solid #cccccc;
+}
+
+.signin-header p {
+  font-weight: 900;
+  font-size: 25px;
+}
+
+.signup-box {
+  margin-top: 50px;
+  margin-left: 90px;
+}
+
+.signup-para p {
+  font-weight: 200;
+}
+
+body {
+  color: #333333;
+  font-family: 'Helvetica', arial;
+  height: 80em;
+}
+.wrap {
+  padding: 40px;
+  text-align: center;
+}
+hr {
+  clear: both;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border: 0;
+  border-top: 1px solid #aaaaaa;
+}
+h1 {
+  font-size: 30px;
+  margin-bottom: 40px;
+}
+p {
+  margin-bottom: 20px;
 }

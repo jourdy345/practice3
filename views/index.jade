@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  header.container
+  header.container.index
     img(src="dist/img/gboy.jpg", class="img-circle")
     nav
       a.about(href="/about") About
@@ -15,8 +15,8 @@ block content
       Nice to meet you.
       Welcome to the first website of Daeyoung Lim. Have a look around and have fun.
 
-  div
-    a.pull-center(href="/login")
-    button.btn.btn-default(type='submit') Sign in
+  div.container.signin.center-block
+    a.center-block(href="/login")
+      button.btn.btn-primary(type='submit') Sign in
 block subcontent
   h3 dfd

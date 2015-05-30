@@ -1,0 +1,14 @@
+{
+  "name": "myapp2",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jourdy345/practice3",
+  "authors": [
+    "Daeyoung Lim <jourdy345@me.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.4",
+    "zxcvbn": "*"
+  }
+}

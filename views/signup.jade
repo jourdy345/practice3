@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  header
+    a(href='/')
+      img.other(src="dist/img/gboy.jpg", class="img-circle")
+  body
+    body
+    form.form-horizontal
+      .form-group
+        label.col-sm-2.control-label(for='NewID') New ID
+        .col-sm-10
+          input#NewID.form-control(type='text', placeholder='')
+      .form-group
+        label.col-sm-2.control-label(for='inputPassword3') Password
+        .col-sm-10
+          input#inputPassword3.form-control(type='password', placeholder='Password')
+      .form-group
+        label.col-sm-2.control-label(for='inputPassword3') Password
+        .col-sm-10
+          input#inputPassword3.form-control(type='password', placeholder='Password')
+        .col-sm-offset-2.col-sm-10
+          button.btn.btn-default(type='submit') Sign in
+
+block subcontent
+  h3 dfd

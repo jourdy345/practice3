@@ -1,4 +1,4 @@
-var atob, express, nodemailer, router;
+var LocalStrategy, User, atob, db, express, mongoose, nodemailer, passport, router;
 
 express = require('express');
 
@@ -6,7 +6,24 @@ nodemailer = require('nodemailer');
 
 atob = require('atob');
 
+passport = require('passport');
+
+LocalStrategy = require('passport-local').Strategy;
+
+mongoose = require('mongoose');
+
 router = express.Router();
+
+User = mongoose.model('User', {
+  userID: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  }
+});
 
 
 /*
@@ -69,3 +86,66 @@ router.get('/contact/failed', function(req, res) {
 });
 
 module.exports = router;
+
+router.get('/login', function(req, res) {
+  return User.find({}, function(err, result) {
+    if (err) {
+      console.log(err);
+    }
+    console.log('user:' + result);
+    return res.render('login.jade');
+  });
+});
+
+passport.use(new LocalStrategy(function(username, password, done) {
+  return User.findOne({
+    username: username
+  }, function(err, user) {
+    if (err) {
+      return done(err);
+    }
+    if (!user) {
+      return done(null, false, {
+        message: 'Incorrect username.'
+      });
+    }
+    if (!user.validPassword(password)) {
+      return done(null, false, {
+        message: 'Incorrect password.'
+      });
+    }
+    return done(null, user);
+  });
+}));
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  successFlash: 'Welcome!',
+  failureRedirect: 'login',
+  failureFlash: 'Invalid username or password'
+}));
+
+mongoose.connect('mongodb://localhost/test');
+
+db = mongoose.connection;
+
+db.on('error', function(err) {
+  if (err) {
+    return console.log(err);
+  }
+});
+
+router.post('/signup', function(req, res) {
+  var user1;
+  console.log(req.body);
+  user1 = new User({
+    userID: req.body.user_id,
+    password: req.body.user_password
+  });
+  return user1.save(function(err) {
+    if (err) {
+      console.log(err);
+    }
+    return res.redirect('/login');
+  });
+});

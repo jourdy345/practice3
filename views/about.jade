@@ -1,7 +1,10 @@
 extends layout
 
 block content
-  header.container
+  header
+    a(href='/')
+      img.other(src="dist/img/gboy.jpg", class="img-circle")
+  div.abouticon
     span.icon-quote
     nav
       a.about(href="/about") About
