@@ -11,6 +11,7 @@ module.exports = (grunt) ->
           '!Gruntfile.coffee'
           'routes/*.coffee'
           'public/**/*.coffee'
+          'models/*.coffee'
         ]
         dest: '.'
         ext: '.js'
@@ -20,12 +21,15 @@ module.exports = (grunt) ->
       dev:
         script: 'bin/www'
         options:
+          env:
+            DEBUG: 'myapp2:*'
           ext: 'js'
           # livereload: true
     watch:
       coffee:
         files: [
           '*.coffee'
+          'models/*.coffee'
           'routes/*.coffee'
           'public/**/*.coffee' 
         ]

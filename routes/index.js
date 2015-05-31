@@ -1,29 +1,16 @@
-var LocalStrategy, User, atob, db, express, mongoose, nodemailer, passport, router;
+var User, atob, db, express, nodemailer, router;
 
 express = require('express');
+
+router = express.Router();
 
 nodemailer = require('nodemailer');
 
 atob = require('atob');
 
-passport = require('passport');
+db = require('../mongodb');
 
-LocalStrategy = require('passport-local').Strategy;
-
-mongoose = require('mongoose');
-
-router = express.Router();
-
-User = mongoose.model('User', {
-  userID: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  }
-});
+User = require('../models/user');
 
 
 /*
@@ -85,8 +72,6 @@ router.get('/contact/failed', function(req, res) {
   return res.send('Failed to send :/');
 });
 
-module.exports = router;
-
 router.get('/login', function(req, res) {
   return User.find({}, function(err, result) {
     if (err) {
@@ -95,44 +80,6 @@ router.get('/login', function(req, res) {
     console.log('user:' + result);
     return res.render('login.jade');
   });
-});
-
-passport.use(new LocalStrategy(function(username, password, done) {
-  return User.findOne({
-    username: username
-  }, function(err, user) {
-    if (err) {
-      return done(err);
-    }
-    if (!user) {
-      return done(null, false, {
-        message: 'Incorrect username.'
-      });
-    }
-    if (!user.validPassword(password)) {
-      return done(null, false, {
-        message: 'Incorrect password.'
-      });
-    }
-    return done(null, user);
-  });
-}));
-
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  successFlash: 'Welcome!',
-  failureRedirect: 'login',
-  failureFlash: 'Invalid username or password'
-}));
-
-mongoose.connect('mongodb://localhost/test');
-
-db = mongoose.connection;
-
-db.on('error', function(err) {
-  if (err) {
-    return console.log(err);
-  }
 });
 
 router.post('/signup', function(req, res) {
@@ -149,3 +96,5 @@ router.post('/signup', function(req, res) {
     return res.redirect('/login');
   });
 });
+
+module.exports = router;

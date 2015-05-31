@@ -18,6 +18,10 @@ html
     link(rel="shortcut icon", href="/img/favicon.ico")
     link(href="https://fontastic.s3.amazonaws.com/MQHkGRcDbNRHsc7j2GzZPF/icons.css", rel="stylesheet")
   body
+    if locals.user_success
+      h1 success: #{locals.user_success}
+    if locals.user_error
+      h1 error: #{locals.user_error}
     block content
     hr
     block sububcontent

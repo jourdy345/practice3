@@ -1,21 +1,14 @@
 express = require 'express'
+router = express.Router()
 nodemailer = require 'nodemailer'
 atob = require 'atob'
-passport = require 'passport'
-LocalStrategy = require('passport-local').Strategy
-mongoose = require 'mongoose'
-router = express.Router()
+# passport = require 'passport'
+# LocalStrategy = require('passport-local').Strategy
+db = require '../mongodb'
+User = require '../models/user'
 
-User = mongoose.model 'User', 
-  userID:
-    type: String
-    required: true
-  password:
-    type: String
-    required: true
-
-User.schema.path('password').validate (value) ->
-  if /
+# User.schema.path('password').validate (value) ->
+#   if /
 
 ###
 GET home page.
@@ -66,9 +59,6 @@ router.get '/contact/done', (req, res) ->
 router.get '/contact/failed', (req, res) ->
   res.send 'Failed to send :/'
 
-module.exports = router
-
-
 ## getting login requests and creating user sessions
 router.get '/login', (req, res) ->
   User.find {}, (err, result) ->
@@ -76,32 +66,38 @@ router.get '/login', (req, res) ->
     console.log 'user:' + result
     res.render 'login.jade'
 
-passport.use(new LocalStrategy (username, password, done) ->
-    User.findOne username: username, (err, user) ->
-      if err then return done(err)
-      if !user
-        return done null, false,
-          message: 'Incorrect username.'
-      if !user.validPassword(password)
-        return done null, false,
-          message: 'Incorrect password.'
-      return done null, user
-)
+# passport.use new LocalStrategy (user_id, user_password, done) ->
+#   # find user(id: hello)
+#   User.findOne userID: user_id, (err, user) ->
+#     if err
+#       return done err
+#     # error if user == null
+#     if user is null
+#       return done null, false,
+#         message: 'Incorrect username.'
+#     # error if user password != user_password
+#     if user.password isnt user_password
+#       return done null, false,
+#         message: 'Invalid password'
+#     # return to create session
+#     return done null, user
 
-router.post '/login',
-  passport.authenticate 'local',
-    successRedirect: '/'
-    successFlash: 'Welcome!'
-    failureRedirect: 'login'
-    failureFlash: 'Invalid username or password'
+# passport.serializeUser (user, done) ->
+#   done null, user._id
 
-## Mongo DB
-mongoose.connect 'mongodb://localhost/test'
+# passport.deserializeUser (_id, done) ->
+#   User.findById _id, (err, user) ->
+#     done err, user
 
-db = mongoose.connection
-db.on 'error', (err) ->
-  console.log err if err
+# router.post '/signin',
+#   passport.authenticate 'local',
+#     successRedirect: '/'
+#     successFlash: 'Welcome!'
+#     failureRedirect: '/login'
+#     failureFlash: 'Invalid username or password'
 
+
+## Posting new user data to MongoDB
 router.post '/signup', (req, res) ->
   console.log req.body
   user1 = new User
@@ -113,21 +109,53 @@ router.post '/signup', (req, res) ->
     res.redirect '/login'
 
 
+## Creating User Sessions
+# router.post '/signin', (req, res) ->
+#   # find user(id: hello)
+#   User.findOne userID: req.body.user_id, (err, user) ->
+#     console.log err if err
+#     if !user?
+#       console.log 'Nonexistent User'
+#     else req.session
+#     res.redirect '/login'
+    # if err
+    #   console.log err
+
+  # error if user == null
+  # error if user password != user_password
+  # return to create session
+
+
+# express.use sessions 
+#   cookieName: 'mySession'
+#   secret: 'dwkobdkwdokDwokdjwSsldohkwedR'
+#   duration: 24 * 60 * 60 * 1000
+#   activeDuration: 1000 * 60 * 5
+#   cookie:
+#     maxAge: 60000
+#     ephemeral: true
+#     httpOnly: true
+#     secure: false
+
+
+# express.use (req, res, next) ->
+#   res.locals.success = req.session.success
+#   res.locals.error = req.session.error
+
+#   if req.mySession.seenyou 
+#     res.setHeader 'X-Seen-You', 'true'
+#   ## setting a property will automatically cause a Set-Cookie response to be sent
+#   req.mySession.seenyou = true
+#   res.setHeader 'X-Seen-You', 'false'
 
 
 
 
 
-# 비밀번호 데이터 타입이 세 가지 이상일 것을 요구할 것
-# 사용자 세션 만들 것
+## 로그인할 때 데이터베이스에 있는 ID인지 체크한 후 있으면 세션 생성
 
 
-
-
-
-
-
-
+module.exports = router
 
 
 

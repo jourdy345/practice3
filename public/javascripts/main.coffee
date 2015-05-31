@@ -1,4 +1,7 @@
 jQuery ->
+  $inputid = $ '.signin-body #inputID'
+  $inputid.focus()
+
   $myModal = $ '#myModal'
   $myModal
     .on 'shown.bs.modal', (e) ->
