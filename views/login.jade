@@ -35,15 +35,15 @@ block content
       div.signin-header
         p Sign in
       div.signin-body
-        form.form-horizontal(action='signin', method='post')
+        form.form-horizontal(action='/login', method='post')
           .form-group
             label.col-sm-2.control-label(for='inputID') ID
             .col-sm-10
-              input#inputID.form-control(type='text', placeholder='User ID')
+              input#inputID.form-control(type='text', name='user_id' placeholder='User ID')
           .form-group
             label.col-sm-2.control-label(for='inputPassword3') Password
             .col-sm-10
-              input#inputPassword3.form-control(type='password', placeholder='Password')
+              input#inputPassword3.form-control(type='password', name='user_password' placeholder='Password')
           .form-group
             .col-sm-offset-2.col-sm-10
               button.btn.btn-primary(type='submit') Sign in

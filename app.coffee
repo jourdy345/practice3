@@ -23,6 +23,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+
+## session setup
 app.use sessions 
   cookieName: 'myapp-session-daeyoungsite'
   requestKey: 'session'
@@ -38,7 +40,6 @@ app.use sessions
     secure: false
 
 app.use (req, res, next) ->
-  # throw new Error 'NEWENW '
   console.log '>>>>>>>>>>>>>>>>>>', req.session
   res.locals.user_success = req.session.success
   res.locals.user_error = req.session.error
@@ -47,19 +48,26 @@ app.use (req, res, next) ->
   delete req.session.error
   next()
 
-app.post '/signin', (req, res) ->
-  User.findOne 'userID: req.body.user_id', (err, user) ->
-    console.log err if err
-    if user is null
-      req.session.error = 'login failed: no username'
-      return res.redirect '/login'
-    
-    if user.password isnt req.body.user_password
-      req.session.error = 'login failed: invalid password'
-      return res.redirect '/login'
-    
-    console.log 'logged in!'
-    return res.redirect '/'
+
+## global middleware checking if there's a session
+app.use (req, res, next) ->
+  if req.session and req.session.user 
+    User.findOne userID: req.session.user, (err, user) ->
+      if user
+        req.user = user
+        delete req.user.password
+        req.session.user = user
+        res.locals.user = user
+      next()
+  else next()
+
+## A middleware function that will check if the user is logged in and redirect them if not.
+requireLogin = (req, res, next) ->
+  if !req.user
+    return res.redirect '/login'
+  next()
+
+
 
 
 

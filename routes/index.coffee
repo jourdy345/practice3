@@ -66,6 +66,23 @@ router.get '/login', (req, res) ->
     console.log 'user:' + result
     res.render 'login.jade'
 
+
+## log-in system
+router.post '/login', (req, res) ->
+  User.findOne userID: req.body.user_id, (err, user) ->
+    console.log err if err
+    if user is null
+      req.session.error = 'login failed: no username'
+      return res.redirect '/login'
+    
+    if user.password isnt req.body.user_password
+      req.session.error = 'login failed: invalid password'
+      return res.redirect '/login'
+    
+    console.log 'logged in!'
+    req.session.user = user
+    res.redirect '/'
+
 # passport.use new LocalStrategy (user_id, user_password, done) ->
 #   # find user(id: hello)
 #   User.findOne userID: user_id, (err, user) ->

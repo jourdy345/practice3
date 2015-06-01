@@ -1,4 +1,4 @@
-var User, app, bodyParser, cookieParser, express, favicon, logger, path, routes, sessions;
+var User, app, bodyParser, cookieParser, express, favicon, logger, path, requireLogin, routes, sessions;
 
 express = require('express');
 
@@ -63,23 +63,30 @@ app.use(function(req, res, next) {
   return next();
 });
 
-app.post('/signin', function(req, res) {
-  return User.findOne('userID: req.body.user_id', function(err, user) {
-    if (err) {
-      console.log(err);
-    }
-    if (user === null) {
-      req.session.error = 'login failed: no username';
-      return res.redirect('/login');
-    }
-    if (user.password !== req.body.user_password) {
-      req.session.error = 'login failed: invalid password';
-      return res.redirect('/login');
-    }
-    console.log('logged in!');
-    return res.redirect('/');
-  });
+app.use(function(req, res, next) {
+  if (req.session && req.session.user) {
+    return User.findOne({
+      userID: req.session.user
+    }, function(err, user) {
+      if (user) {
+        req.user = user;
+        delete req.user.password;
+        req.session.user = user;
+        res.locals.user = user;
+      }
+      return next();
+    });
+  } else {
+    return next();
+  }
 });
+
+requireLogin = function(req, res, next) {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+  return next();
+};
 
 app.use('/', routes.index);
 

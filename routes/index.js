@@ -82,6 +82,27 @@ router.get('/login', function(req, res) {
   });
 });
 
+router.post('/login', function(req, res) {
+  return User.findOne({
+    userID: req.body.user_id
+  }, function(err, user) {
+    if (err) {
+      console.log(err);
+    }
+    if (user === null) {
+      req.session.error = 'login failed: no username';
+      return res.redirect('/login');
+    }
+    if (user.password !== req.body.user_password) {
+      req.session.error = 'login failed: invalid password';
+      return res.redirect('/login');
+    }
+    console.log('logged in!');
+    req.session.user = user;
+    return res.redirect('/');
+  });
+});
+
 router.post('/signup', function(req, res) {
   var user1;
   console.log(req.body);
