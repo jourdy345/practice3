@@ -41,33 +41,41 @@ app.use sessions
 
 app.use (req, res, next) ->
   console.log '>>>>>>>>>>>>>>>>>>', req.session
-  res.locals.user_success = req.session.success
-  res.locals.user_error = req.session.error
+  res.locals.success = req.session.success
+  res.locals.error = req.session.error
   res.locals.session = req.session or {}
   delete req.session.success
   delete req.session.error
   next()
 
 
-## global middleware checking if there's a session
-app.use (req, res, next) ->
-  if req.session and req.session.user 
-    User.findOne userID: req.session.user, (err, user) ->
-      if user
-        req.user = user
-        delete req.user.password
-        req.session.user = user
-        res.locals.user = user
-      next()
-  else next()
+# global middleware checking if there's a session
+# app.use (req, res, next) ->
+#   if req.session.user  
+#     User.findById req.session.user._id, (err, user) ->
+#       if err
+#         return next err
+#       if user
+#         delete user.password
+#         req.user = user
+#         req.session.user = user
+#         next()
+#       else
+#         return next new Error 'No user found'
+#   else
+#     next()
 
-## A middleware function that will check if the user is logged in and redirect them if not.
+# A middleware function that will check if the user is logged in and redirect them if not.
 requireLogin = (req, res, next) ->
-  if !req.user
+  # if req.session.user._id
+  unless req.session.user
+    req.session.error = 'auth required'
     return res.redirect '/login'
   next()
 
-
+app.get '/', [requireLogin], (req, res) ->
+  res.render 'index.jade', 
+    title: 'MAIN !!'
 
 
 

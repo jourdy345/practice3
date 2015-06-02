@@ -18,13 +18,21 @@ html
     link(rel="shortcut icon", href="/img/favicon.ico")
     link(href="https://fontastic.s3.amazonaws.com/MQHkGRcDbNRHsc7j2GzZPF/icons.css", rel="stylesheet")
   body
-    if locals.user_success
-      h1 success: #{locals.user_success}
-    if locals.user_error
-      h1 error: #{locals.user_error}
+    nav.navbar.navbar-default.navbar-fixed-top
+      .container-fluid
+        .navbar-header
+          if locals.session.user
+            //- strong Username: #{locals.session.user.userID || '(empty)'}
+            strong= locals.session.user.userID || '(empty)'
+            a(href='/logout') logout
+    if locals.success
+      h1 success: #{locals.success}
+    if locals.error
+      h1 error: #{locals.error}
     block content
     hr
     block sububcontent
+
     script(src="http://localhost:35729/livereload.js")
     script(src='/bower_components/jquery/dist/jquery.min.js')
     script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')

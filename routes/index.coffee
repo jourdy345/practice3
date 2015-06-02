@@ -61,11 +61,18 @@ router.get '/contact/failed', (req, res) ->
 
 ## getting login requests and creating user sessions
 router.get '/login', (req, res) ->
+  if req.session.user
+    req.session.error = 'Already logged in !'
+    return res.redirect '/'
   User.find {}, (err, result) ->
     console.log err if err
     console.log 'user:' + result
     res.render 'login.jade'
 
+router.get '/logout', (req, res) ->
+  req.session = {}
+  req.session.error = 'Logged out !'
+  res.redirect '/'
 
 ## log-in system
 router.post '/login', (req, res) ->

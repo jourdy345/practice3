@@ -55,38 +55,27 @@ app.use(sessions({
 
 app.use(function(req, res, next) {
   console.log('>>>>>>>>>>>>>>>>>>', req.session);
-  res.locals.user_success = req.session.success;
-  res.locals.user_error = req.session.error;
+  res.locals.success = req.session.success;
+  res.locals.error = req.session.error;
   res.locals.session = req.session || {};
   delete req.session.success;
   delete req.session.error;
   return next();
 });
 
-app.use(function(req, res, next) {
-  if (req.session && req.session.user) {
-    return User.findOne({
-      userID: req.session.user
-    }, function(err, user) {
-      if (user) {
-        req.user = user;
-        delete req.user.password;
-        req.session.user = user;
-        res.locals.user = user;
-      }
-      return next();
-    });
-  } else {
-    return next();
-  }
-});
-
 requireLogin = function(req, res, next) {
-  if (!req.user) {
+  if (!req.session.user) {
+    req.session.error = 'auth required';
     return res.redirect('/login');
   }
   return next();
 };
+
+app.get('/', [requireLogin], function(req, res) {
+  return res.render('index.jade', {
+    title: 'MAIN !!'
+  });
+});
 
 app.use('/', routes.index);
 

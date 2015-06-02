@@ -73,6 +73,10 @@ router.get('/contact/failed', function(req, res) {
 });
 
 router.get('/login', function(req, res) {
+  if (req.session.user) {
+    req.session.error = 'Already logged in !';
+    return res.redirect('/');
+  }
   return User.find({}, function(err, result) {
     if (err) {
       console.log(err);
@@ -80,6 +84,12 @@ router.get('/login', function(req, res) {
     console.log('user:' + result);
     return res.render('login.jade');
   });
+});
+
+router.get('/logout', function(req, res) {
+  req.session = {};
+  req.session.error = 'Logged out !';
+  return res.redirect('/');
 });
 
 router.post('/login', function(req, res) {
