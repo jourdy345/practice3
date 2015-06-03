@@ -1,6 +1,6 @@
 jQuery ->
-  $inputid = $ '.signin-body #inputID'
-  $inputid.focus()
+  $autofocus = $ '#autofocus'
+  $autofocus.focus()
 
   $myModal = $ '#myModal'
   $myModal

@@ -2,15 +2,12 @@
 mongoose = require 'mongoose'
 
 ## MongoDB
-User = mongoose.model 'User', 
+User = mongoose.model 'Article', 
   userID:
     type: String
     required: true
   password:
     type: String
     required: true
-  article:
-    type: String
-    required: false
 
 module.exports = User

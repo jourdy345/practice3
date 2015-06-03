@@ -20,7 +20,7 @@ html
   body
     nav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
-        .navbar-header
+        .navbar-header.pull-right
           if locals.session.user
             //- strong Username: #{locals.session.user.userID || '(empty)'}
             strong= locals.session.user.userID || '(empty)'

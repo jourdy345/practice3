@@ -1,7 +1,7 @@
 jQuery(function() {
-  var $inputid, $myModal;
-  $inputid = $('.signin-body #inputID');
-  $inputid.focus();
+  var $autofocus, $myModal;
+  $autofocus = $('#autofocus');
+  $autofocus.focus();
   $myModal = $('#myModal');
   $myModal.on('shown.bs.modal', function(e) {
     $(this).find('[name=user_id]').focus();

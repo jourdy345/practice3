@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  header
+    a(href='/')
+      img.other(src="dist/img/gboy.jpg", class="img-circle")
+  div.container
+    if locals.session.user && locals.session.user.article
+      div.container
+        p.multiline #{locals.session.user.article}
+    
+        a(href='/writing')
+          button.btn.btn-primary(type='button') Write
+      //- form(action='/article', method='get')
+      //-   textarea.form-control(rows="10", name='article')
+      //-   button.btn.btn-primary(type='submit') Post
+    else if !locals.session.user
+      a.center-block(href='/login') You should sign in to see your journal !
+    else
+      div.container.center-block
+        p You don't have any posts !
+        a(href='/writing')
+          button.btn.btn-primary(type='button') Write
+block subcontent
+  h3 dfd

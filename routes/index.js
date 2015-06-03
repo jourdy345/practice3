@@ -31,12 +31,16 @@ router.get('/work', function(req, res) {
   return res.render('work.jade');
 });
 
-router.get('/life', function(req, res) {
-  return res.render('life.jade');
+router.get('/diary', function(req, res) {
+  return res.render('diary.jade');
 });
 
 router.get('/contact', function(req, res) {
   return res.render('contact.jade');
+});
+
+router.get('/writing', function(req, res) {
+  return res.render('writing.jade');
 });
 
 router.post('/contact', function(req, res) {
@@ -118,7 +122,8 @@ router.post('/signup', function(req, res) {
   console.log(req.body);
   user1 = new User({
     userID: req.body.user_id,
-    password: req.body.user_password
+    password: req.body.user_password,
+    article: {}
   });
   return user1.save(function(err) {
     if (err) {
@@ -126,6 +131,13 @@ router.post('/signup', function(req, res) {
     }
     return res.redirect('/login');
   });
+});
+
+router.post('/diary', function(req, res) {
+  console.log(req.body);
+  req.session.user.article = req.body.article;
+  req.session.success = 'Article Saved !';
+  return res.redirect('/diary');
 });
 
 module.exports = router;

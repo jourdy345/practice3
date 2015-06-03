@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  header
+    a(href='/')
+      img.other(src="dist/img/gboy.jpg", class="img-circle")
+  div.container#article
+    form(action='/diary', method='post')
+      textarea.form-control#autofocus(rows="30", name='article')
+      br
+      button.btn.btn-primary.pull-right#articlePost(type='submit') Post
+block subcontent
+  h3 dfd

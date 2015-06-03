@@ -10,6 +10,10 @@ User = mongoose.model('User', {
   password: {
     type: String,
     required: true
+  },
+  article: {
+    type: String,
+    required: false
   }
 });
 

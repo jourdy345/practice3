@@ -23,11 +23,14 @@ router.get '/about', (req, res) ->
 router.get '/work', (req, res) ->
   res.render 'work.jade'
 
-router.get '/life', (req, res) ->
-  res.render 'life.jade'
+router.get '/diary', (req, res) ->
+  res.render 'diary.jade'
 
 router.get '/contact', (req, res) ->
   res.render 'contact.jade'
+
+router.get '/writing', (req, res) ->
+  res.render 'writing.jade'
 
 
 ## /contact email delivering system code
@@ -127,10 +130,19 @@ router.post '/signup', (req, res) ->
   user1 = new User
     userID: req.body.user_id
     password: req.body.user_password
+    article: {}
 
   user1.save (err) ->
     console.log err if err
     res.redirect '/login'
+
+router.post '/diary', (req, res) ->
+  console.log req.body
+  req.session.user.article = req.body.article
+  req.session.success = 'Article Saved !'
+  res.redirect '/diary'
+
+
 
 
 ## Creating User Sessions
