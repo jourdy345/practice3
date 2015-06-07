@@ -1,15 +1,13 @@
-var db, mongoose;
+var MongoDB, db, objectid, server;
 
-mongoose = require('mongoose');
+MongoDB = require('mongodb');
 
-mongoose.connect('mongodb://localhost/test');
+objectid = MongoDB.ObjectID;
 
-db = mongoose.connection;
-
-db.on('error', function(err) {
-  if (err) {
-    return console.log(err);
-  }
+server = new MongoDB.Server('localhost', 27017, {
+  auto_reconnect: true
 });
+
+db = new MongoDB.Db('Users', server);
 
 module.exports = db;

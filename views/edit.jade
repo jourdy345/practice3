@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  header
+    a(href='/')
+      img.other(src="/dist/img/gboy.jpg", class="img-circle")
+  div.container
+    div.container#article
+    form(action='/edit/'+ article._id, method='post')
+      textarea.form-control.autofocus(rows="20", name='article')= article.article
+      br
+      button.btn.btn-primary.pull-right#articlePost(type='submit') Edit
+block subcontent
+  h3 dfd

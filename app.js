@@ -1,4 +1,4 @@
-var User, app, bodyParser, cookieParser, express, favicon, logger, path, requireLogin, routes, sessions;
+var app, bodyParser, cookieParser, express, favicon, logger, moment, path, requireLogin, routes, sessions;
 
 express = require('express');
 
@@ -19,9 +19,11 @@ routes = {
 
 sessions = require('client-sessions');
 
-User = require('./models/user');
+moment = require('moment');
 
 app = express();
+
+app.locals.moment = moment;
 
 app.set('views', path.join(__dirname, 'views'));
 
@@ -54,7 +56,6 @@ app.use(sessions({
 }));
 
 app.use(function(req, res, next) {
-  console.log('>>>>>>>>>>>>>>>>>>', req.session);
   res.locals.success = req.session.success;
   res.locals.error = req.session.error;
   res.locals.session = req.session || {};

@@ -22,13 +22,13 @@ html
       .container-fluid
         .navbar-header.pull-right
           if locals.session.user
-            //- strong Username: #{locals.session.user.userID || '(empty)'}
-            strong= locals.session.user.userID || '(empty)'
+            strong= locals.session.user.user_id || '(empty)'
             a(href='/logout') logout
-    if locals.success
-      h1 success: #{locals.success}
-    if locals.error
-      h1 error: #{locals.error}
+    div.container-fluid
+      if locals.success
+        h1 success: #{locals.success}
+      if locals.error
+        h1 error: #{locals.error}
     block content
     hr
     block sububcontent
@@ -38,3 +38,4 @@ html
     script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
     script(src='/bower_components/zxcvbn/zxcvbn.js')
     script(src='/javascripts/main.js')
+    script(src='/bower_components/moment/min/moment.min.js')

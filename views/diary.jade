@@ -5,21 +5,42 @@ block content
     a(href='/')
       img.other(src="dist/img/gboy.jpg", class="img-circle")
   div.container
-    if locals.session.user && locals.session.user.article
+    if locals.session.user
       div.container
-        p.multiline #{locals.session.user.article}
-    
-        a(href='/writing')
-          button.btn.btn-primary(type='button') Write
-      //- form(action='/article', method='get')
-      //-   textarea.form-control(rows="10", name='article')
-      //-   button.btn.btn-primary(type='submit') Post
+        //- p.multiline #{locals.session.user.article}
+        #diary
+          .item-template.hide
+            p.multiline
+            .text-left.text-muted
+              small Last updated: 
+            a.btn.btn-primary.edit(href='/edit/') Edit
+            a.btn.btn-default.delete(href='/delete/' data-toggle='confirm') Delete
+            hr  
+          if articles.length === 0
+            p No article written !
+          else
+            each article in articles
+              p.multiline= article.article
+              .text-left.text-muted
+                small Last updated: #{moment(article.date).format('lll')}
+              a.btn.btn-primary(href='/edit/'+article._id) Edit
+              a.btn.btn-default(href='/delete/'+article._id data-toggle='confirm') Delete
+              //- button.btn.btn-primary(type='button') 
+              hr  
+        hr
+        hr      
+        div.container
+          a.btn.btn-primary.pull-right(href='/writing') Write
+          a.btn.btn-info.pull-right(data-toggle='write_diary')
+            span.fui-plus
+            
     else if !locals.session.user
-      a.center-block(href='/login') You should sign in to see your journal !
+      p.center-block You should sign in to see your journal !
+      a.btn.btn-primary(href='/login') Sign in !
+        
     else
       div.container.center-block
         p You don't have any posts !
-        a(href='/writing')
-          button.btn.btn-primary(type='button') Write
+        a.btn.btn-primary.pull-right(href='/writing') Write
 block subcontent
   h3 dfd

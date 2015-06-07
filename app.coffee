@@ -8,8 +8,10 @@ routes =
   index: require './routes/index'
   users: require './routes/users'
 sessions = require 'client-sessions'
-User = require './models/user'
+moment = require 'moment'
+# User = require './models/user'
 app = express()
+app.locals.moment = moment
 
 # view engine setup
 app.set 'views', path.join(__dirname, 'views')
@@ -39,13 +41,14 @@ app.use sessions
     httpOnly: true
     secure: false
 
+# app.set 'view cache', true
 app.use (req, res, next) ->
-  console.log '>>>>>>>>>>>>>>>>>>', req.session
   res.locals.success = req.session.success
   res.locals.error = req.session.error
   res.locals.session = req.session or {}
   delete req.session.success
   delete req.session.error
+  # console.log 'app view cache: ', app.get 'view cache'
   next()
 
 
